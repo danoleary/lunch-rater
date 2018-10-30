@@ -1,0 +1,4 @@
+functions-build/*.js
+.cache/*.js
+public/*.js
+jest.config.js

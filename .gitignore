@@ -7,3 +7,6 @@ yarn-error.log
 /public
 .DS_Store
 /functions-build
+
+# Local config
+.env

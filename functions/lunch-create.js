@@ -1,21 +1,29 @@
-exports.handler = async (event) => {
+import dbclient from '../functions-helpers/dbclient'
+import verifyPayload from '../functions-helpers/verifypayload'
+
+exports.handler = async event => {
   const data = JSON.parse(event.body)
-  console.log("Function `lunch-create` invoked", data)
 
-  const CosmosClient = require('@azure/cosmos').CosmosClient;
-  
-  const endpoint = '';
-  const masterKey = '';
-  
-  const databaseId = 'lunchrater';
-  const containerId = 'events';
-  
-  const client = new CosmosClient({ endpoint: endpoint, auth: { masterKey: masterKey } });
+  const dataIsValid = verifyPayload(data)
+  console.log(dataIsValid)
 
-  const { item } = await client.database(databaseId).container(containerId).items.create(data);
+  if (!dataIsValid) {
+    return {
+      statusCode: 400,
+      body: String('Invalid payload')
+    }
+  }
 
-  return  {
-      statusCode: 200,
-      body: JSON.stringify(data)
-  };
+  const databaseId = 'lunchrater'
+  const containerId = 'events'
+
+  await dbclient
+    .database(databaseId)
+    .container(containerId)
+    .items.create(data)
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(data)
+  }
 }
