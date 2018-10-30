@@ -38,7 +38,7 @@ const WeekForm = props => (
                 disabled={!props.isValid()}
                 type="submit"
               >
-                Submit
+                {props.submitText}
               </button>
             </div>
             <div className="control">
@@ -62,5 +62,6 @@ WeekForm.propTypes = {
   isValid: PropTypes.func,
   organiser: PropTypes.string,
   establishment: PropTypes.string,
-  date: PropTypes.string
+  date: PropTypes.string,
+  submitText: PropTypes.string
 }

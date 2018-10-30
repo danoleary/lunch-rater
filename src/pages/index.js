@@ -1,7 +1,6 @@
 import React from 'react'
 import 'bulma/css/bulma.css'
 import Layout from '../components/layout'
-import Table from '../components/table'
 import Hero from '../components/hero'
 import { Link } from 'gatsby'
 import fetch from 'isomorphic-fetch'
@@ -24,36 +23,51 @@ class IndexPage extends React.Component {
             rota: result.map(x => JSON.parse(x))
           })
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         this.setState({
           rota: []
         })
       )
   }
 
+  mapRotaToCards (rota) {
+    return rota.map(x => (
+      <div key={x.id}>
+        <div className="card" >
+          <header className="card-header">
+            <p className="card-header-title">{`${ x.date }: ${ x.organiser }`}</p>
+          </header>
+          <div className="card-content">
+            <div className="content">{x.establishment}</div>
+          </div>
+          <footer className="card-footer">
+            <a href="#" className="card-footer-item">
+              Rate
+            </a>
+            <Link
+              className="card-footer-item"
+              to="/editWeek/"
+              state={{ id: x.id }}
+            >
+              Edit
+            </Link>
+            <a href="#" className="card-footer-item">
+              Delete
+            </a>
+          </footer>
+        </div>
+        <br />
+      </div>
+    ))
+  }
+
   render () {
     return (
       <div>
         <Hero title={'Lunch rater!'} />
-        <Layout
-          page={
-            <div className="columns">
-              <div className="column" />
-              <div className="column is-one-half">
-                <Table
-                  rows={this.state.rota}
-                  headers={['Date', 'Organiser', 'Establishment', '', '&nbsp;']}
-                />
-                <Link className="button is-large is-success" to="/newWeek/">
-                  Add new week!
-                </Link>
-              </div>
-              <div className="column" />
-            </div>
-          }
-        />
+        <Link className="button is-success" to="/newWeek/">
+          Add new week!
+        </Link>
+        <Layout page={this.mapRotaToCards(this.state.rota)} />
       </div>
     )
   }

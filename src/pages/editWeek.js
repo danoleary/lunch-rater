@@ -80,7 +80,8 @@ class EditWeek extends React.Component {
         organiser={this.state.organiser}
         establishment={this.state.establishment}
         date={this.state.date}
-        isValid={this.isValid} />
+        isValid={this.isValid}
+        submitText='Save' />
     )
   }
 }
