@@ -1,6 +1,4 @@
-function isNotEmptyString (x) {
-  return !(x == null) && x.length !== 0
-}
+const isNotEmptyString = x => x !== null && x !== undefined && x.length !== 0
 
 const events = [
   {
@@ -10,6 +8,17 @@ const events = [
         isNotEmptyString(x['organiser']) &&
         isNotEmptyString(x['establishment']) &&
         isNotEmptyString(x['date'])
+      )
+    }
+  },
+  {
+    name: 'LunchUpdated',
+    check: function (x) {
+      return (
+        isNotEmptyString(x['organiser']) &&
+        isNotEmptyString(x['establishment']) &&
+        isNotEmptyString(x['date']) &&
+        isNotEmptyString(x['lunchId'])
       )
     }
   }

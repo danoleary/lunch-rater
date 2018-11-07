@@ -1,18 +1,17 @@
 import React from 'react'
 
-const DateInput = props => (
+const DateInput = ({ label, name, handleChange, initialValue }) =>
   <div className="field">
-    <label className="label">{props.label}</label>
+    <label className="label">{label}</label>
     <div className="control">
       <input
         className="input"
-        name={props.name}
+        name={name}
         type="date"
-        onInput={props.handleChange}
-        defaultValue={props.initialValue}
+        onInput={handleChange}
+        defaultValue={initialValue}
       />
     </div>
   </div>
-)
 
 export default DateInput

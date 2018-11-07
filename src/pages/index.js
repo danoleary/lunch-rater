@@ -2,6 +2,7 @@ import React from 'react'
 import 'bulma/css/bulma.css'
 import Layout from '../components/layout'
 import Hero from '../components/hero'
+import Card from '../components/card'
 import { Link } from 'gatsby'
 import fetch from 'isomorphic-fetch'
 
@@ -18,9 +19,12 @@ class IndexPage extends React.Component {
       .then(res => res.json())
       .then(
         result => {
-          console.log(result)
+          const rota = result.map(x => JSON.parse(x))
+          const sortedRota = rota.slice().sort(function (a, b) {
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
+          })
           this.setState({
-            rota: result.map(x => JSON.parse(x))
+            rota: sortedRota
           })
         },
         this.setState({
@@ -29,45 +33,16 @@ class IndexPage extends React.Component {
       )
   }
 
-  mapRotaToCards (rota) {
-    return rota.map(x => (
-      <div key={x.id}>
-        <div className="card" >
-          <header className="card-header">
-            <p className="card-header-title">{`${ x.date }: ${ x.organiser }`}</p>
-          </header>
-          <div className="card-content">
-            <div className="content">{x.establishment}</div>
-          </div>
-          <footer className="card-footer">
-            <a href="#" className="card-footer-item">
-              Rate
-            </a>
-            <Link
-              className="card-footer-item"
-              to="/editWeek/"
-              state={{ id: x.id }}
-            >
-              Edit
-            </Link>
-            <a href="#" className="card-footer-item">
-              Delete
-            </a>
-          </footer>
-        </div>
-        <br />
-      </div>
-    ))
-  }
-
   render () {
+    const cards = this.state.rota.map(x =>
+      <Card key={x.id} id={x.id} date={x.date} organiser={x.organiser} establishment={x.establishment} />)
     return (
       <div>
         <Hero title={'Lunch rater!'} />
         <Link className="button is-success" to="/newWeek/">
           Add new week!
         </Link>
-        <Layout page={this.mapRotaToCards(this.state.rota)} />
+        <Layout page={cards} />
       </div>
     )
   }

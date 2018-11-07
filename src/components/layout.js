@@ -1,9 +1,8 @@
 import React from 'react'
 
-const Layout = props => (
+const Layout = ({ page }) =>
   <section className="section">
-    <div className="container">{props.page}</div>
+    <div className="container">{page}</div>
   </section>
-)
 
 export default Layout

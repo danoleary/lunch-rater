@@ -1,6 +1,5 @@
 import dbclient from '../functions-helpers/dbclient'
 import verifyPayload from '../functions-helpers/verifypayload'
-const uuidv1 = require('uuid/v1')
 
 exports.handler = async event => {
   const data = JSON.parse(event.body)
@@ -17,8 +16,6 @@ exports.handler = async event => {
 
   const databaseId = 'lunchrater'
   const containerId = 'events'
-
-  data['lunchId'] = uuidv1()
 
   await dbclient
     .database(databaseId)

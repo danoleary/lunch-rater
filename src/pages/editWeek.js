@@ -1,7 +1,7 @@
-import React from 'react'
-import { navigateTo } from 'gatsby-link'
-import 'bulma/css/bulma.css'
-import WeekForm from '../components/weekForm'
+import React from 'react';
+import { navigateTo } from 'gatsby-link';
+import 'bulma/css/bulma.css';
+import WeekForm from '../components/weekForm';
 
 class EditWeek extends React.Component {
   constructor (props) {
@@ -9,7 +9,8 @@ class EditWeek extends React.Component {
     this.state = {
       organiser: null,
       establishment: null,
-      date: null
+      date: null,
+      lunchId: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -23,11 +24,12 @@ class EditWeek extends React.Component {
       .then(res => res.json())
       .then(
         result => {
-          console.log(result)
+          console.log(result);
           this.setState({
             organiser: result.organiser,
             establishment: result.establishment,
-            date: result.date
+            date: result.date,
+            lunchId: result.lunchId
           })
         },
         // Note: it's important to handle errors here
@@ -74,14 +76,16 @@ class EditWeek extends React.Component {
   render () {
     return (
       <WeekForm
-        title='Edit week'
-        handleSubmit={this.handleChange}
+        title="Edit week"
+        handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
         organiser={this.state.organiser}
         establishment={this.state.establishment}
         date={this.state.date}
+        lunchId={this.state.lunchId}
         isValid={this.isValid}
-        submitText='Save' />
+        submitText="Save"
+      />
     )
   }
 }

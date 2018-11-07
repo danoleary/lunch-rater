@@ -50,8 +50,8 @@ class NewWeek extends React.Component {
   render () {
     return (
       <WeekForm
-        title='Edit week'
-        handleSubmit={this.handleChange}
+        title='Add new week'
+        handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
         organiser={this.state.organiser}
         establishment={this.state.establishment}
